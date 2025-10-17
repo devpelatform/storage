@@ -1,13 +1,14 @@
 {
-  "name": "@pelatform/package-template",
-  "version": "0.0.1",
-  "description": "This is a template package for creating a package & docs.",
+  "name": "@pelatform/storage",
+  "version": "1.0.0",
+  "description": "Storage utilities for SaaS applications.",
   "author": "Pelatform Dev",
   "license": "MIT",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "sideEffects": false,
   "exports": {
     ".": {
       "import": {
@@ -17,6 +18,36 @@
       "require": {
         "types": "./dist/index.d.cts",
         "default": "./dist/index.cjs"
+      }
+    },
+    "./s3": {
+      "import": {
+        "types": "./dist/s3.d.ts",
+        "default": "./dist/s3.js"
+      },
+      "require": {
+        "types": "./dist/s3.d.cts",
+        "default": "./dist/s3.cjs"
+      }
+    },
+    "./cloudinary": {
+      "import": {
+        "types": "./dist/cloudinary.d.ts",
+        "default": "./dist/cloudinary.js"
+      },
+      "require": {
+        "types": "./dist/cloudinary.d.cts",
+        "default": "./dist/cloudinary.cjs"
+      }
+    },
+    "./helpers": {
+      "import": {
+        "types": "./dist/helpers.d.ts",
+        "default": "./dist/helpers.js"
+      },
+      "require": {
+        "types": "./dist/helpers.d.cts",
+        "default": "./dist/helpers.cjs"
       }
     }
   },
@@ -28,28 +59,44 @@
     "types:check": "tsc --noEmit",
     "prepublishOnly": "pnpm run clean && tsup --clean --dts"
   },
-  "homepage": "https://devpelatform.github.io/package-template",
+  "homepage": "https://devpelatform.github.io/storage",
   "files": [
     "dist/*",
     "README.md"
   ],
   "keywords": [
     "pelatform",
-    "typescript"
+    "storage",
+    "s3",
+    "cloudinary",
+    "minio",
+    "digitalocean",
+    "supabase"
   ],
+  "dependencies": {
+    "mime-types": "^3.0.1"
+  },
   "devDependencies": {
+    "@types/mime-types": "^3.0.1",
     "@types/node": "^24.8.1",
-    "@types/react": "^19.2.2",
-    "@types/react-dom": "^19.2.2",
-    "esbuild-plugin-preserve-directives": "^0.0.11",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0",
     "tsup": "^8.5.0",
     "typescript": "^5.9.3"
   },
   "peerDependencies": {
-    "react": ">=18.0.0",
-    "react-dom": ">=18.0.0"
+    "@aws-sdk/client-s3": ">=3.0.0",
+    "@aws-sdk/s3-request-presigner": ">=3.0.0",
+    "cloudinary": ">=2.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@aws-sdk/client-s3": {
+      "optional": true
+    },
+    "@aws-sdk/s3-request-presigner": {
+      "optional": true
+    },
+    "cloudinary": {
+      "optional": true
+    }
   },
   "publishConfig": {
     "access": "public"
